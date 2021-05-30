@@ -12,9 +12,10 @@ __all__ = ('Accelerometer', 'Audio', 'Barometer', 'Battery', 'Call', 'Camera',
            'Sms', 'TTS', 'UniqueID', 'Vibrator', 'Wifi', 'Flash', 'CPU',
            'Temperature', 'Humidity', 'SpatialOrientation', 'Brightness',
            'Processors', 'StoragePath', 'Keystore', 'Bluetooth', 'Screenshot',
-           'STT')
+           'STT', 'LinearAcceleration')
 
 from plyer.facades.accelerometer import Accelerometer
+from plyer.facades.linear_acceleration import LinearAcceleration
 from plyer.facades.audio import Audio
 from plyer.facades.barometer import Barometer
 from plyer.facades.battery import Battery

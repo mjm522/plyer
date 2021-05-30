@@ -10,7 +10,7 @@ __all__ = (
     'flash', 'gps', 'gravity', 'gyroscope', 'humidity', 'irblaster',
     'keystore', 'light', 'notification', 'orientation', 'processors',
     'proximity', 'screenshot', 'sms', 'spatialorientation', 'storagepath',
-    'stt', 'temperature', 'tts', 'uniqueid', 'vibrator', 'wifi'
+    'stt', 'temperature', 'tts', 'uniqueid', 'vibrator', 'wifi', 'linear_acceleration'
 )
 
 __version__ = '2.0.1.dev0'
@@ -21,6 +21,9 @@ from plyer.utils import Proxy
 
 #: Accelerometer proxy to :class:`plyer.facades.Accelerometer`
 accelerometer = Proxy('accelerometer', facades.Accelerometer)
+
+#: Linear Acceleration proxy to :class:`plyer.facades.LinearAcceleration`
+linear_acceleration = Proxy('linear_acceleration', facades.LinearAcceleration)
 
 #: Keyring proxy to :class::`plyer.facades.Keyring`
 keystore = Proxy('keystore', facades.Keystore)
