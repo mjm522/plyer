@@ -21,7 +21,7 @@ class LinearAccelerationSensorListener(PythonJavaClass):
         self.SensorManager = cast('android.hardware.SensorManager', service)
         self.sensor = self.SensorManager.getDefaultSensor(
                 Sensor.TYPE_LINEAR_ACCELERATION)
-        self.values = None
+        self.values = [None, None, None]
 
     def enable(self):
         self.SensorManager.registerListener(self, self.sensor,
@@ -39,25 +39,34 @@ class LinearAccelerationSensorListener(PythonJavaClass):
         pass
 
 
+
 class AndroidLinearAcceleration(LinearAcceleration):
-
-    listener = None
-
-    def _get_acceleration(self):
-        if self.listener and self.listener.value:
-            values = self.listener.values
-            along_x, along_y, along_z = values[:3]
-            return along_x, along_y, along_z
+    def __init__(self):
+        super().__init__()
+        self.bState = False
 
     def _enable(self):
-        if not self.listener:
+        if (not self.bState):
             self.listener = LinearAccelerationSensorListener()
             self.listener.enable()
+            self.bState = True
 
     def _disable(self):
-        if self.listener:
+        if (self.bState):
+            self.bState = False
             self.listener.disable()
-            delattr(self, 'listener')
+            del self.listener
+
+    def _get_acceleration(self):
+        if (self.bState):
+            return tuple(self.listener.values)
+        else:
+            return (None, None, None)
+
+    def __del__(self):
+        if(self.bState):
+            self._disable()
+        super().__del__()
 
 
 def instance():

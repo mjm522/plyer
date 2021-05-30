@@ -12,7 +12,7 @@ use linear acceleration of your device.
 '''
 
 
-class LinearAcceleration(object):
+class LinearAcceleration:
     '''
     Linear Accleration facade.
     '''
