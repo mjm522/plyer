@@ -1,5 +1,6 @@
 from plyer.facades import LinearAcceleration
 from jnius import PythonJavaClass, java_method, autoclass, cast
+from plyer.platforms.android import activity
 
 
 Context = autoclass('android.content.Context')
@@ -40,7 +41,7 @@ class LinearAccelerationSensorListener(PythonJavaClass):
         # Maybe, do something in future?
         pass
 
-        
+
 class AndroidLinearAcceleration(LinearAcceleration):
     def __init__(self):
         super().__init__()
