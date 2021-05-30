@@ -1,12 +1,7 @@
-from jnius import autoclass
-from jnius import cast
-from jnius import java_method
-from jnius import PythonJavaClass
-
 from plyer.facades import LinearAcceleration
-from plyer.platforms.android import activity
+from jnius import PythonJavaClass, java_method, autoclass, cast
 
-ActivityInfo = autoclass('android.content.pm.ActivityInfo')
+
 Context = autoclass('android.content.Context')
 Sensor = autoclass('android.hardware.Sensor')
 SensorManager = autoclass('android.hardware.SensorManager')
@@ -16,16 +11,22 @@ class LinearAccelerationSensorListener(PythonJavaClass):
     __javainterfaces__ = ['android/hardware/SensorEventListener']
 
     def __init__(self):
-        super(LinearAccelerationSensorListener, self).__init__()
-        service = activity.getSystemService(Context.SENSOR_SERVICE)
-        self.SensorManager = cast('android.hardware.SensorManager', service)
+        super().__init__()
+        self.SensorManager = cast(
+            'android.hardware.SensorManager',
+            activity.getSystemService(Context.SENSOR_SERVICE)
+        )
         self.sensor = self.SensorManager.getDefaultSensor(
-                Sensor.TYPE_LINEAR_ACCELERATION)
+            Sensor.TYPE_LINEAR_ACCELERATION
+        )
+
         self.values = [None, None, None]
 
     def enable(self):
-        self.SensorManager.registerListener(self, self.sensor,
-                    SensorManager.SENSOR_DELAY_NORMAL)
+        self.SensorManager.registerListener(
+            self, self.sensor,
+            SensorManager.SENSOR_DELAY_NORMAL
+        )
 
     def disable(self):
         self.SensorManager.unregisterListener(self, self.sensor)
@@ -36,10 +37,10 @@ class LinearAccelerationSensorListener(PythonJavaClass):
 
     @java_method('(Landroid/hardware/Sensor;I)V')
     def onAccuracyChanged(self, sensor, accuracy):
+        # Maybe, do something in future?
         pass
 
-
-
+        
 class AndroidLinearAcceleration(LinearAcceleration):
     def __init__(self):
         super().__init__()
